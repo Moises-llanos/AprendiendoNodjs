@@ -1,4 +1,7 @@
 const { request, response } = require('express');
+const Usuario = require('../models/usuario');
+
+
 
 const controllGet = (req, res) => {
     res.send({
@@ -8,12 +11,16 @@ const controllGet = (req, res) => {
     })
 }
 
-const controllPost = (req, res) => {
+const controllPost = async(req, res) => {
 
     const body = req.body
-    res.send({
-        req: body,
-        query: req.query
+    const usuario = new Usuario(body);
+
+    await usuario.save();
+
+    res.json({
+        usuario,
+        nombre: "juam"
 
     })
 }
